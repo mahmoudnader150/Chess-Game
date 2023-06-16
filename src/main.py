@@ -23,6 +23,18 @@ class Main:
             game.show_pieces(screen)
             #   Quiting the application
             for event in pygame.event.get():
+
+                # click
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
+                # mouse motion
+                elif event.type == pygame.MOUSEMOTION:
+                    pass
+
+                # click release
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    pass
+                # quit app
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
