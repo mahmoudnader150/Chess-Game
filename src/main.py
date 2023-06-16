@@ -17,6 +17,7 @@ class Main:
 
         screen = self.screen
         game = self.game
+        dragger = self.game.dragger
 
         while True:
             game.show_bg(screen)
