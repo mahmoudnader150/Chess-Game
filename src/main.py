@@ -44,11 +44,13 @@ class Main:
 
                 # mouse motion
                 elif event.type == pygame.MOUSEMOTION:
-                    pass
+                    if dragger.dragging:
+                        dragger.update_mouse(event.pos)
+                        dragger.update_blit(screen)
 
                 # click release
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    pass
+                    dragger.undrag_piece()
                 # quit app
                 if event.type == pygame.QUIT:
                     pygame.quit()
