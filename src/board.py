@@ -96,16 +96,47 @@ class Board:
                             # create new move
                             piece.add_move(move)
 
-                            # has enemy piece
+                        # has enemy piece = add move+breaking
                         if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
                             # append new move
                             piece.add_move(move)
+                            break
+                        # has team piece
+                        if self.squares[possible_move_row][possible_move_col].has_team_piece(piece.color):
+                            break
+
                     else:
                         break
                     # incrementing incrs (continue on same dir)
                     possible_move_row = possible_move_row + row_incr
                     possible_move_col = possible_move_col+col_incr
 
+        def king_moves():
+            adjs = [
+                (row-1, col+0),  # up
+                (row-1, col+1),  # up-right
+                (row+0, col+1),  # right
+                (row+1, col+1),  # down-right
+                (row+1, col+0),  # down
+                (row+1, col-1),  # down -left
+                (row+0, col-1),  # left
+                (row-1, col-1),  # up-left
+            ]
+            # normal moves
+            for possible_move in adjs:
+                possible_move_row, possible_move_col = possible_move
+
+                if Square.in_range(possible_move_row, possible_move_col):
+                    if self.squares[possible_move_row][possible_move_col].isempty_or_enemy(piece.color):
+                        # create squares to the new move
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, possible_move_col)
+                        # create new move
+                        move = Move(initial, final)
+                        piece.add_move(move)
+            # castling moves
+            # queen castling
+            # king castling
         if isinstance(piece, Pawn):
             pawn_moves()
 
@@ -141,7 +172,7 @@ class Board:
             ])
 
         elif isinstance(piece, King):
-            pass
+            king_moves()
 
     def _create(self):
         for row in range(ROWS):
@@ -180,3 +211,5 @@ class Board:
         # king
         self.squares[row_other][4] = Square(
             row_other, 4, King(color))
+        self.squares[2][3] = Square(
+            2, 3, King(color))
