@@ -77,6 +77,35 @@ class Board:
                         # append new move
                         piece.add_move(move)
 
+        def straightline_moves(incrs):
+            for incr in incrs:
+                row_incr, col_incr = incr
+                possible_move_row = row+row_incr
+                possible_move_col = col+col_incr
+
+                while True:
+                    if Square.in_range(possible_move_row, possible_move_col):
+                        # create squares of new move
+                        initial = Square(row, col)
+                        final = Square(possible_move_row, possible_move_col)
+                        # create a possible new move
+                        move = Move(initial, final)
+
+                        # Empty
+                        if self.squares[possible_move_row][possible_move_col].isempty():
+                            # create new move
+                            piece.add_move(move)
+
+                            # has enemy piece
+                        if self.squares[possible_move_row][possible_move_col].has_enemy_piece(piece.color):
+                            # append new move
+                            piece.add_move(move)
+                    else:
+                        break
+                    # incrementing incrs (continue on same dir)
+                    possible_move_row = possible_move_row + row_incr
+                    possible_move_col = possible_move_col+col_incr
+
         if isinstance(piece, Pawn):
             pawn_moves()
 
@@ -84,13 +113,32 @@ class Board:
             knight_moves()
 
         elif isinstance(piece, Bishop):
-            pass
+            straightline_moves([
+                (-1, 1),  # up-right
+                (-1, -1),  # up-left
+                (1, 1),  # down-right
+                (1, -1)  # down-left
+            ])
 
         elif isinstance(piece, Rook):
-            pass
+            straightline_moves([
+                (-1, 0),  # up
+                (0, 1),  # left
+                (1, 0),  # down
+                (0, -1)  # right
+            ])
 
         elif isinstance(piece, Queen):
-            pass
+            straightline_moves([
+                (-1, 1),  # up-right
+                (-1, -1),  # up-left
+                (1, 1),  # down-right
+                (1, -1),  # down-left
+                (-1, 0),  # up
+                (0, 1),  # left
+                (1, 0),  # down
+                (0, -1)  # right
+            ])
 
         elif isinstance(piece, King):
             pass
@@ -106,8 +154,7 @@ class Board:
         for col in range(COLS):
             self.squares[row_pawn][col] = Square(
                 row_pawn, col, Pawn(color))
-        self.squares[5][0] = Square(
-            5, 0, Pawn(color))
+
         # knights
         self.squares[row_other][1] = Square(
             row_other, 1, Knight(color))
