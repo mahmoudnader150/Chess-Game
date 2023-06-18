@@ -28,6 +28,13 @@ class Board:
                 (row-2, col-1),
             ]
 
+            for possible_move in possible_moves:
+                possible_move_row, possible_move_col = (possible_move)
+
+                if Square.in_range(possible_move_row, possible_move_col):
+                    if self.squares[possible_move_row][possible_move_col].isempty_or_rival(piece.color):
+                        pass
+
         if isinstance(piece, Pawn):
             pass
 
