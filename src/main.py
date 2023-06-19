@@ -88,6 +88,8 @@ class Main:
                             # show
                             game.show_bg(screen)
                             game.show_pieces(screen)
+                            # NXT TURN
+                            game.next_turn()
 
                     dragger.undrag_piece()
                 # quit app
