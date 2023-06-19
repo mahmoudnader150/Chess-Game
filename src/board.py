@@ -13,6 +13,9 @@ class Board:
         self._add_pieces('white')
         self._add_pieces('black')
 
+    def move(self, piece, move):
+        pass
+
     def calc_moves(self, piece, row, col):
         '''
            calculate all possible (valid) moves of an specific piece on a specific position
@@ -211,5 +214,3 @@ class Board:
         # king
         self.squares[row_other][4] = Square(
             row_other, 4, King(color))
-        self.squares[2][3] = Square(
-            2, 3, King(color))
