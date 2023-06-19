@@ -12,6 +12,7 @@ class Board:
         self._create()
         self._add_pieces('white')
         self._add_pieces('black')
+        self.last_move = None
 
     def move(self, piece, move):
         initial = move.initial
@@ -25,6 +26,10 @@ class Board:
         piece.moved = True
 
         # clear valid moves
+        piece.clear_moves()
+
+        # set last move
+        self.last_move = move
 
     def valid_move(self, piece, move):
         return move in piece.moves
