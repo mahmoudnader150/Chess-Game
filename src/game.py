@@ -14,6 +14,7 @@ class Game:
         self.dragger = Dragger()
 
     # show methods
+
     def show_bg(self, surface):
         for row in range(ROWS):
             for col in range(COLS):
@@ -78,7 +79,7 @@ class Game:
             rect = (self.hovered_sqr.col*SQSIZE,
                     self.hovered_sqr .row*SQSIZE, SQSIZE, SQSIZE)
             # blit
-            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, color, rect, width=3)
 
     # other moethods(not rendered)
 
