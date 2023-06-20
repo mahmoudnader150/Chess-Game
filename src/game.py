@@ -27,9 +27,17 @@ class Game:
 
                 # rect x,y,h,w
                 rect = (col*SQSIZE, row*SQSIZE, SQSIZE, SQSIZE)
-
                 # draw
                 pygame.draw.rect(surface, color, rect)
+                # row cordiantes
+                if col == 0:
+                    # new color
+                    color = theme.bg.dark if row % 2 == 0 else theme.bg.light
+                    # label
+                    lbl = self.config.font.render(str(ROWS-row), 1, color)
+                    lbl_pos = (5, 5+row*SQSIZE)
+                    # blit
+                    surface.blit(lbl, lbl_pos)
 
     def show_pieces(self, surface):
         for row in range(ROWS):
