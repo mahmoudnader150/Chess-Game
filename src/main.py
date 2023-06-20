@@ -101,6 +101,11 @@ class Main:
                             game.next_turn()
 
                     dragger.undrag_piece()
+                # key press (theme)
+                elif event.key == pygame.KEYDOWN:
+                    # change theme
+                    if(event.key == pygame.K_t):
+                        game.change_theme()
                 # quit app
                 if event.type == pygame.QUIT:
                     pygame.quit()
