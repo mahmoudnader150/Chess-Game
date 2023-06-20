@@ -95,5 +95,11 @@ class Game:
     def set_hover(self, row, col):
         self.hovered_sqr = self.board.squares[row][col]
 
-    def chang_theme(self):
+    def change_theme(self):
         self.config.change_theme()
+
+    def play_sound(self, captured=False):
+        if captured:
+            self.config.capture_sound.play()
+        else:
+            self.config.move_sound.play()
