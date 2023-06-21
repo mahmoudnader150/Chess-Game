@@ -27,7 +27,11 @@ class Board:
             self.check_promotion(piece, final)
 
         # king castling
-
+        if isinstance(piece, King):
+            if self.castling(initial, final):
+                diff = final.col-initial.col
+                rook = piece.left_rook if (diff < 0) else piece.right_rook
+                self.move(rook, rook.moves[-1])
         # move
         piece.moved = True
 
@@ -45,7 +49,7 @@ class Board:
             self.squares[final.row][final.col].piece = Queen(piece.color)
 
     def castling(self, initial, final):
-        pass
+        return abs(initial.col-final.col) == 2
 
     def calc_moves(self, piece, row, col):
         '''
