@@ -51,6 +51,9 @@ class Board:
     def castling(self, initial, final):
         return abs(initial.col-final.col) == 2
 
+    def in_check(self, piece, move):
+        pass
+
     def calc_moves(self, piece, row, col):
         '''
            calculate all possible (valid) moves of an specific piece on a specific position
