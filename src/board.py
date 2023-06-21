@@ -195,7 +195,7 @@ class Board:
                                 initial = Square(row, col)
                                 final = Square(row, 2)
                                 move = Move(initial, final)
-                                left_rook.add_move(move)
+                                piece.add_move(move)
 
                 # king castling
                 right_rook = self.squares[row][7].piece
@@ -219,7 +219,7 @@ class Board:
                                 initial = Square(row, col)
                                 final = Square(row, 6)
                                 move = Move(initial, final)
-                                right_rook.add_move(move)
+                                piece.add_move(move)
 
         if isinstance(piece, Pawn):
             pawn_moves()
