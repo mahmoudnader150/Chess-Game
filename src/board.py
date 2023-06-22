@@ -61,7 +61,7 @@ class Board:
             for col in range(COLS):
                 if temp_board.squares[row][col].has_enemy_piece(piece.color):
                     p = temp_board.squares[row][col].piece
-                    temp_board.calc_moves(p, row, col)
+                    temp_board.calc_moves(p, row, col, bool=False)
                     # looping on each move for the piece
                     for m in p.moves:
                         if isinstance(m.final.piece, King):
@@ -113,8 +113,13 @@ class Board:
                         final = Square(possible_move_row, col)
                         # create a new move
                         move = Move(initial, final)
+
                         # check pot checks
-                        if not self.in_check(piece, move):
+                        if bool:
+                            if not self.in_check(piece, move):
+                                # add move
+                                piece.add_move(move)
+                        else:
                             # add move
                             piece.add_move(move)
                     # blocked
