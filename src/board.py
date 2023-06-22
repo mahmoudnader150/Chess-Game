@@ -265,7 +265,8 @@ class Board:
 
                                 else:
                                     # add move
-                                    piece.add_move(move)
+                                    left_rook.add_move(moveR)
+                                    piece.add_move(moveK)
 
                 # king castling
                 right_rook = self.squares[row][7].piece
@@ -282,14 +283,21 @@ class Board:
                                 # rook move
                                 initial = Square(row, 7)
                                 final = Square(row, 5)
-                                move = Move(initial, final)
-                                right_rook.add_move(move)
+                                moveR = Move(initial, final)
 
                                 # king move
                                 initial = Square(row, col)
                                 final = Square(row, 6)
-                                move = Move(initial, final)
-                                piece.add_move(move)
+                                moveK = Move(initial, final)
+                                if bool:
+                                    if not self.in_check(piece, moveK) and not self.in_check(right_rook, moveR):
+                                        right_rook.add_move(moveR)
+                                        piece.add_move(moveK)
+
+                                else:
+                                    # add move
+                                    right_rook.add_move(moveR)
+                                    piece.add_move(moveK)
 
         if isinstance(piece, Pawn):
             pawn_moves()
