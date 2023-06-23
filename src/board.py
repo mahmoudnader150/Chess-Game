@@ -189,6 +189,26 @@ class Board:
                                 # add move
                                 piece.add_move(move)
 
+            # right en pass
+            if Square.in_range(col+1) and row == r:
+                if self.squares[row][col+1].has_enemy_piece(piece.color):
+                    p = self.squares[row][col+1].piece
+                    if isinstance(p, Pawn):
+                        if p.en_passant:
+                            # create initial and final move squares
+                            initial = Square(row, col)
+                            final = Square(fr,
+                                           col+1, p)
+                            # create a new move
+                            move = Move(initial, final)
+                            if bool:
+                                if not self.in_check(piece, move):
+                                    # add move
+                                    piece.add_move(move)
+                            else:
+                                # add move
+                                piece.add_move(move)
+
         def straightline_moves(incrs):
             for incr in incrs:
                 row_incr, col_incr = incr
