@@ -26,8 +26,9 @@ class Board:
         # pawn promotion
         if isinstance(piece, Pawn):
             # pawn en passant
-            if self.en_passant(initial, final):
-                pass
+            if self.en_pessant(initial, final):
+                piece.en_passant = True
+                print('pawn moves 2 squares')
             else:
                 self.check_promotion(piece, final)
 
@@ -55,6 +56,9 @@ class Board:
 
     def castling(self, initial, final):
         return abs(initial.col-final.col) == 2
+
+    def en_pessant(self, initial, final):
+        return abs(initial.row-final.row) == 2
 
     def in_check(self, piece, move):
         temp_piece = copy.deepcopy(piece)
@@ -140,6 +144,7 @@ class Board:
                 # not in range
                 else:
                     break
+
             # diagonal moves
             possible_move_row = row+piece.dir
             possible_move_cols = [col-1, col+1]
@@ -160,6 +165,29 @@ class Board:
                         else:
                             # add move
                             piece.add_move(move)
+
+            # en passant moves
+            r = 3 if piece.color == 'white' else 4
+            fr = 2 if piece.color == 'white' else 5
+            # left en pass
+            if Square.in_range(col-1) and row == r:
+                if self.squares[row][col-1].has_enemy_piece():
+                    p = self.squares[row][col-1].piece
+                    if isinstance(p, Pawn):
+                        if p.en_passant:
+                            # create initial and final move squares
+                            initial = Square(row, col)
+                            final = Square(fr,
+                                           col-1, p)
+                            # create a new move
+                            move = Move(initial, final)
+                            if bool:
+                                if not self.in_check(piece, move):
+                                    # add move
+                                    piece.add_move(move)
+                            else:
+                                # add move
+                                piece.add_move(move)
 
         def straightline_moves(incrs):
             for incr in incrs:
