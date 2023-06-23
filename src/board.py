@@ -25,7 +25,11 @@ class Board:
 
         # pawn promotion
         if isinstance(piece, Pawn):
-            self.check_promotion(piece, final)
+            # pawn en passant
+            if self.en_passant(initial, final):
+                pass
+            else:
+                self.check_promotion(piece, final)
 
         # king castling
         if isinstance(piece, King):
