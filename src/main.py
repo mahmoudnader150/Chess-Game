@@ -98,6 +98,7 @@ class Main:
 
                             board.move(dragger.piece, move)
                             game.play_sound(captured)
+                            board.set_true_en_passant(dragger.piece)
                             # show
                             game.show_bg(screen)
                             game.show_last_move(screen)

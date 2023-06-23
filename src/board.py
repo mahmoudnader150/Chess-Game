@@ -18,7 +18,7 @@ class Board:
         self._add_pieces('black')
         self.last_move = None
 
-    def move(self, piece, move):
+    def move(self, piece, move, testing=False):
         initial = move.initial
         final = move.final
 
@@ -37,21 +37,20 @@ class Board:
                 # console board move update
                 self.squares[initial.row][initial.col+diff].piece = None
                 self.squares[final.row][final.col].piece = piece
-                sound = Sound(os.path.joi(
-                    '../assets/sounds/capture.wav'
-                )
-                )
-                sound.play()
-            # pawn en passant
-            if self.en_passant(initial, final):
-                piece.en_passant = True
+                if not testing:
+                    sound = Sound(os.path.join(
+                        'assets/sounds/capture.wav'
+                    )
+                    )
+                    sound.play()
+
                 #print('pawn moves 2 squares')
             else:
                 self.check_promotion(piece, final)
 
         # king castling
         if isinstance(piece, King):
-            if self.castling(initial, final):
+            if self.castling(initial, final) and not testing:
                 diff = final.col-initial.col
                 rook = piece.left_rook if (diff < 0) else piece.right_rook
                 self.move(rook, rook.moves[-1])
@@ -74,13 +73,28 @@ class Board:
     def castling(self, initial, final):
         return abs(initial.col-final.col) == 2
 
-    def en_passant(self, initial, final):
-        return abs(initial.row-final.row) == 2
+    def set_true_en_passant(self, piece):
+        if not isinstance(piece, Pawn):
+            return
+        for row in range(ROWS):
+            for col in range(COLS):
+                if isinstance(self.squares[row][col].piece, Pawn):
+                    self.squares[row][col].piece.en_passant = False
+        piece.en_passant = True
+
+    def set_false_en_passant(self):
+        for row in range(ROWS):
+            for col in range(COLS):
+                if isinstance(self.squares[row][col].piece, Pawn):
+                    pawn = self.squares[row][col].piece
+                    if self.last_move:
+                        if self.last_move.final.piece != pawn:
+                            pawn.en_passant = False
 
     def in_check(self, piece, move):
         temp_piece = copy.deepcopy(piece)
         temp_board = copy.deepcopy(self)
-        temp_board.move(temp_piece, move)
+        temp_board.move(temp_piece, move, testing=True)
 
         for row in range(ROWS):
             for col in range(COLS):
