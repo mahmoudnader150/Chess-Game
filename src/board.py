@@ -171,7 +171,7 @@ class Board:
             fr = 2 if piece.color == 'white' else 5
             # left en pass
             if Square.in_range(col-1) and row == r:
-                if self.squares[row][col-1].has_enemy_piece():
+                if self.squares[row][col-1].has_enemy_piece(piece.color):
                     p = self.squares[row][col-1].piece
                     if isinstance(p, Pawn):
                         if p.en_passant:
