@@ -19,14 +19,23 @@ class Board:
         initial = move.initial
         final = move.final
 
+        en_passant_empty = self.squares[final.row][final.col].isempty()
+
         # console board move update
         self.squares[initial.row][initial.col].piece = None
         self.squares[final.row][final.col].piece = piece
 
+        # en passant capture
+
         # pawn promotion
         if isinstance(piece, Pawn):
+            diff = final.col-initial.col
+            if diff != 0 and en_passant_empty:
+                # console board move update
+                self.squares[initial.row][initial.col+diff].piece = None
+                self.squares[final.row][final.col].piece = piece
             # pawn en passant
-            if self.en_pessant(initial, final):
+            if self.en_passant(initial, final):
                 piece.en_passant = True
                 print('pawn moves 2 squares')
             else:
@@ -57,7 +66,7 @@ class Board:
     def castling(self, initial, final):
         return abs(initial.col-final.col) == 2
 
-    def en_pessant(self, initial, final):
+    def en_passant(self, initial, final):
         return abs(initial.row-final.row) == 2
 
     def in_check(self, piece, move):
