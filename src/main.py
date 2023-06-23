@@ -5,6 +5,33 @@ from const import *
 from game import Game
 from square import Square
 from move import Move
+import tkinter as tk
+
+
+def white_gui():
+    root = tk.Tk()
+    root.title("Chess Game")
+
+    frame = tk.Frame(root, width=300, height=200)
+    frame.pack()
+
+    label = tk.Label(frame, text="White wins!", font=("Arial", 24))
+    label.pack(pady=50)
+
+    root.mainloop()
+
+
+def black_gui():
+    root = tk.Tk()
+    root.title("Chess Game")
+
+    frame = tk.Frame(root, width=300, height=200)
+    frame.pack()
+
+    label = tk.Label(frame, text="Black wins!", font=("Arial", 24))
+    label.pack(pady=50)
+
+    root.mainloop()
 
 
 class Main:
@@ -103,6 +130,20 @@ class Main:
                             game.show_bg(screen)
                             game.show_last_move(screen)
                             game.show_pieces(screen)
+
+                            if board.white_win():
+                                game.next_turn()
+                                pygame.quit()
+                               # sys.exit()
+                                white_gui()
+                                sys.exit()
+                            elif board.black_win():
+                                game.next_turn()
+                                pygame.quit()
+                               # sys.exit()
+                                black_gui()
+                                sys.exit()
+
                             # NXT TURN
                             game.next_turn()
 

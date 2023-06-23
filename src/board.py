@@ -82,6 +82,20 @@ class Board:
                     self.squares[row][col].piece.en_passant = False
         piece.en_passant = True
 
+    def white_win(self):
+        for row in range(ROWS):
+            for col in range(COLS):
+                if isinstance(self.squares[row][col].piece, King) and self.squares[row][col].piece.color == 'black':
+                    return False
+        return True
+
+    def black_win(self):
+        for row in range(ROWS):
+            for col in range(COLS):
+                if isinstance(self.squares[row][col].piece, King) and self.squares[row][col].piece.color == 'white':
+                    return False
+        return True
+
     def set_false_en_passant(self):
         for row in range(ROWS):
             for col in range(COLS):
@@ -309,15 +323,15 @@ class Board:
                         final = Square(possible_move_row, possible_move_col)
                         # create new move
                         move = Move(initial, final)
-                        if bool:
-                            if not self.in_check(piece, move):
-                                # add move
-                                piece.add_move(move)
-                            else:
-                                break
-                        else:
-                            # add move
-                            piece.add_move(move)
+                        # if bool:
+                        #     if not self.in_check(piece, move):
+                        #         # add move
+                        #         piece.add_move(move)
+                        #     else:
+                        #         break
+                        # else:
+                        #     # add move
+                        piece.add_move(move)
             # castling moves
             if not piece.moved:
                 # queen castling
