@@ -1,6 +1,6 @@
 # PVP Chess Game
 
-[Chess Game Screenshot]([images/chess_game_screenshot.jpg](https://drive.google.com/file/d/16bB83NWssKIoAo_LSi3PPF9mU664grF8/view?usp=sharing))
+[Chess Game Screenshot](https://drive.google.com/file/d/16bB83NWssKIoAo_LSi3PPF9mU664grF8/view?usp=sharing)
 
 Welcome to the PVP Chess Game! This is a Python-based chess game that supports themes and sounds to enhance your gaming experience. Whether you're a seasoned chess player or a beginner looking to learn and have fun, this game has something for everyone.
 
